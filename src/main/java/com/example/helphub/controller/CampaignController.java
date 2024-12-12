@@ -39,4 +39,12 @@ public class CampaignController {
         return campaign.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Campaign> updateCampaign(@PathVariable String id, @RequestBody Campaign updatedCampaign) {
+        Optional<Campaign> campaign = campaignService.updateCampaign(id, updatedCampaign);
+        return campaign.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
+
+
 }

@@ -30,4 +30,21 @@ public class CampaignService {
     public Optional<Campaign> getCampaignById(String id) {
         return campaignRepository.findById(id);
     }
+
+    public Optional<Campaign> updateCampaign(String id, Campaign updatedCampaign) {
+        Optional<Campaign> existingCampaign = campaignRepository.findById(id);
+
+        if (existingCampaign.isPresent()) {
+            Campaign campaign = existingCampaign.get();
+            campaign.setName(updatedCampaign.getName());
+            campaign.setDescription(updatedCampaign.getDescription());
+            campaign.setStartDate(updatedCampaign.getStartDate());
+            campaign.setEndDate(updatedCampaign.getEndDate());
+            // Update other fields if required
+
+            return Optional.of(campaignRepository.save(campaign));
+        } else {
+            return Optional.empty();
+        }
+    }
 }
